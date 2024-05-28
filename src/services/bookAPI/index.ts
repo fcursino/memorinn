@@ -1,11 +1,9 @@
 import axios from 'axios'
 
 const bookAPI = axios.create({
-  baseURL: 'https://api.repo.nypl.org/api/v2',
+  baseURL: 'https://api2.isbndb.com',
   headers: {
-    'Accept': 'application/json',
-    'Authorization': 'Token token="ttxsbb6xnzimzjry"',
-    'Access-Control-Cross-Origin': '*'
+    'Authorization': 'Token token=ttxsbb6xnzimzjry'
   },
 });
 export default bookAPI

@@ -31,7 +31,7 @@ function Home () {
 
   async function searchBooks() {
     try {
-      const response = await bookAPI.get(`/items/search?q=cats`);
+      const response = await bookAPI.get(`/items/total`);
       console.log(response.data);
     } catch (error) {
       console.error('Error fetching books:', error);
