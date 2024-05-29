@@ -8,6 +8,12 @@ import Icon from '../../components/Icon'
 import bookAPI from '../../services/bookAPI'
 import { useEffect, useState } from 'react'
 
+interface Result {
+  title: string;
+  author_name: string[];
+  [key: string]: unknown; // permite outros campos de qualquer tipo
+}
+
 const books = [
   {
     name: "Nome do livro1",
