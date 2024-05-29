@@ -6,7 +6,7 @@ import Logo from '../../components/Logo'
 import { HomeBottomContainer, HomeContainer, HomeFeaturedBooks, HomeFeaturedBooksTitle, HomeLeftContainer, HomeLogoTitle, HomeRightContainer, HomeSearchTitle } from './style'
 import Icon from '../../components/Icon'
 import bookAPI from '../../services/bookAPI'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const books = [
   {
@@ -29,9 +29,10 @@ const books = [
 
 function Home () {
 
+  const [search, setSearch] = useState('')
   async function searchBooks() {
     try {
-      const response = await bookAPI.get(`/items/total`);
+      const response = await bookAPI.get(`${search}`.replace('/', ''));
       console.log(response.data);
     } catch (error) {
       console.error('Error fetching books:', error);
@@ -54,7 +55,7 @@ function Home () {
         <HomeSearchTitle>
           Pesquise por seus livros favoritos e veja o que outras pessoas comentaram sobre eles
         </HomeSearchTitle>
-        <Input>
+        <Input changeSearch={setSearch}>
         <Icon onClick={searchBooks} >
         <Search color="inherit" />
         </Icon>

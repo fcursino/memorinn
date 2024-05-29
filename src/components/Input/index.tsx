@@ -1,13 +1,15 @@
 import { InputContainer, InputText } from "./style"
 
 interface InputProps {
-  children?: React.ReactNode
+  children?: React.ReactNode,
+  changeSearch: (value: string) => void 
 }
 
-const Input: React.FC<InputProps> = ({ children }) => {
+const Input: React.FC<InputProps> = ({ children, changeSearch }) => {
+
   return (
     <InputContainer>
-      <InputText />
+      <InputText onChange={e => changeSearch(e.target.value.replace('  ', ' ').replace(' ', '+'))} />
       {children}
     </InputContainer>
   )
