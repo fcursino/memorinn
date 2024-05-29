@@ -60,6 +60,13 @@ function Home () {
         <Search color="inherit" />
         </Icon>
         </Input>
+        {
+          searchResults.map((result: Result) => (
+            <ListItem type='search'>
+              <b>{result.title}</b> escrito por {result.author_name[0]}
+            </ListItem>
+          ))
+        }
         
       </HomeLeftContainer>
       <HomeRightContainer>
