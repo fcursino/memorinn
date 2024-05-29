@@ -36,10 +36,11 @@ const books = [
 function Home () {
 
   const [search, setSearch] = useState('')
+  const [searchResults, setSearchResults] = useState([])
   async function searchBooks() {
     try {
-      const response = await bookAPI.get(`${search}`.replace('/', ''));
-      console.log(response.data);
+      const response = await bookAPI.get(`${search}`.replace('/', '').concat('&page=1&limit=10'));
+      setSearchResults(response.data.docs)
     } catch (error) {
       console.error('Error fetching books:', error);
     }
