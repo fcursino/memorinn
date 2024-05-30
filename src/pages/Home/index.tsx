@@ -36,15 +36,19 @@ const books = [
 
 function Home () {
   const [search, setSearch] = useState('')
+  const [searchPage, setSearchPage] = useState(1)
   const [searchResults, setSearchResults] = useState([])
+  const [totalOfPages, setTotalOfPages] = useState(0)
   const [isSearchEnable, setIsSearchEnable] = useState(true)
 
   async function searchBooks() {
     try {
       if(!isSearchEnable) return false
       setIsSearchEnable(false)
-      const response = await bookAPI.get(`${search}`.replace('/', '').concat('&page=207651&limit=10'));
+      const response = await bookAPI.get(`${search}`.replace('/', '').concat(`&page=${searchPage}&limit=10`));
       setSearchResults(response.data.docs)
+      const newTotalOfPages = Math.round(response.data.numFound / 10) || 0
+      setTotalOfPages(newTotalOfPages)
       setTimeout(() => {
         setIsSearchEnable(true)
       }, 1500)
@@ -58,9 +62,16 @@ function Home () {
     setSearchResults([])
   }
 
+  function updateSearchPage(newPage: number) {
+    console.log('aqui')
+    console.log(newPage)
+    if(newPage === 0 || !isSearchEnable) return false
+    setSearchPage(newPage)
+  }
+
   useEffect(() => {
     searchBooks();
-  }, []);
+  }, [searchPage]);
 
   return (
     <HomeContainer>
@@ -94,7 +105,7 @@ function Home () {
             </ListItem>
           ))
         }
-        <Pagination />
+        <Pagination searchPage={searchPage} updateSearchPage={updateSearchPage} totalOfPages={totalOfPages}  />
         </> : null
         }
         
