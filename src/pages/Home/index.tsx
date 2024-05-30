@@ -1,4 +1,4 @@
-import { Search } from '@material-ui/icons'
+import { Search, Clear } from '@material-ui/icons'
 import Card from '../../components/Card'
 import Input from '../../components/Input'
 import ListItem from '../../components/ListItem'
@@ -7,11 +7,12 @@ import { HomeBottomContainer, HomeContainer, HomeFeaturedBooks, HomeFeaturedBook
 import Icon from '../../components/Icon'
 import bookAPI from '../../services/bookAPI'
 import { useEffect, useState } from 'react'
+import Pagination from '../../components/Pagination'
 
 interface Result {
   title: string;
   author_name: string[];
-  [key: string]: unknown; // permite outros campos de qualquer tipo
+  [key: string]: unknown;
 }
 
 const books = [
@@ -34,16 +35,27 @@ const books = [
 ]
 
 function Home () {
-
   const [search, setSearch] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  const [isSearchEnable, setIsSearchEnable] = useState(true)
+
   async function searchBooks() {
     try {
-      const response = await bookAPI.get(`${search}`.replace('/', '').concat('&page=1&limit=10'));
+      if(!isSearchEnable) return false
+      setIsSearchEnable(false)
+      const response = await bookAPI.get(`${search}`.replace('/', '').concat('&page=207651&limit=10'));
       setSearchResults(response.data.docs)
+      setTimeout(() => {
+        setIsSearchEnable(true)
+      }, 1500)
     } catch (error) {
       console.error('Error fetching books:', error);
     }
+  }
+
+  function clearSearch() {
+    setSearch("")
+    setSearchResults([])
   }
 
   useEffect(() => {
@@ -62,17 +74,28 @@ function Home () {
         <HomeSearchTitle>
           Pesquise por seus livros favoritos e veja o que outras pessoas comentaram sobre eles
         </HomeSearchTitle>
-        <Input changeSearch={setSearch}>
-        <Icon onClick={searchBooks} >
-        <Search color="inherit" />
-        </Icon>
+        <Input changeSearch={setSearch} search={search}>
+          {
+            !searchResults.length ?
+            <Icon onClick={searchBooks}>
+              <Search titleAccess='buscar' color="inherit" />
+            </Icon> :
+            <Icon onClick={clearSearch} >
+              <Clear titleAccess='limpar' color="inherit" />
+            </Icon>
+          }
         </Input>
+        {searchResults.length ?
+        <>
         {
           searchResults.map((result: Result) => (
             <ListItem type='search'>
-              <b>{result.title}</b> escrito por {result.author_name[0]}
+              <b>{result.title}</b> escrito por {result.author_name ? result.author_name[0] : 'desconhecido'}
             </ListItem>
           ))
+        }
+        <Pagination />
+        </> : null
         }
         
       </HomeLeftContainer>
