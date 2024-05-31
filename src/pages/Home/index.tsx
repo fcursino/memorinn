@@ -63,8 +63,6 @@ function Home () {
   }
 
   function updateSearchPage(newPage: number) {
-    console.log('aqui')
-    console.log(newPage)
     if(newPage === 0 || !isSearchEnable) return false
     setSearchPage(newPage)
   }
