@@ -87,10 +87,16 @@ function Home () {
           {
             !searchResults.length ?
             <Icon onClick={searchBooks}>
-              <Search titleAccess='buscar' color="inherit" />
+              <Search 
+                titleAccess='buscar' 
+                color="inherit" 
+              />
             </Icon> :
             <Icon onClick={clearSearch} >
-              <Clear titleAccess='limpar' color="inherit" />
+              <Clear 
+                titleAccess='limpar' 
+                color="inherit" 
+              />
             </Icon>
           }
         </Input>
@@ -103,7 +109,11 @@ function Home () {
             </ListItem>
           ))
         }
-        <Pagination searchPage={searchPage} updateSearchPage={updateSearchPage} totalOfPages={totalOfPages}  />
+        <Pagination 
+          searchPage={searchPage} 
+          updateSearchPage={updateSearchPage} 
+          totalOfPages={totalOfPages}  
+        />
         </> : null
         }
         
