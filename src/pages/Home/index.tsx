@@ -47,7 +47,7 @@ function Home () {
       setIsSearchEnable(false)
       const response = await bookAPI.get(`${search}`.replace('/', '').concat(`&page=${searchPage}&limit=10`));
       setSearchResults(response.data.docs)
-      const newTotalOfPages = Math.round(response.data.numFound / 10) || 0
+      const newTotalOfPages = Math.ceil(response.data.numFound / 10);
       setTotalOfPages(newTotalOfPages)
       setTimeout(() => {
         setIsSearchEnable(true)
