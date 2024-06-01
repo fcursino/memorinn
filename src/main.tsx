@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar/index.tsx'
 import Home from './pages/Home/index.tsx'
 import Background from './components/Background/index.tsx'
+import Details from './pages/Details/index.tsx'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,6 +14,7 @@ ReactDOM.render(
     <Router>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/details' element={<Details />} />
       </Routes>
     </Router>
   </React.StrictMode>,

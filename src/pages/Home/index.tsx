@@ -7,6 +7,7 @@ import { HomeBottomContainer, HomeContainer, HomeFeaturedBooks, HomeFeaturedBook
 import Icon from '../../components/Icon'
 import bookAPI from '../../services/bookAPI'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import Pagination from '../../components/Pagination'
 
 interface Result {
@@ -51,7 +52,7 @@ function Home () {
       setTotalOfPages(newTotalOfPages)
       setTimeout(() => {
         setIsSearchEnable(true)
-      }, 1500)
+      }, 1000)
     } catch (error) {
       console.error('Error fetching books:', error);
     }
@@ -104,9 +105,11 @@ function Home () {
         <>
         {
           searchResults.map((result: Result) => (
-            <ListItem type='search'>
-              <b>{result.title}</b> escrito por {result.author_name ? result.author_name[0] : 'desconhecido'}
-            </ListItem>
+            <Link to="/details">
+              <ListItem type='search'>
+                <b>{result.title}</b> escrito por {result.author_name ? result.author_name[0] : 'desconhecido'}
+              </ListItem>
+            </Link> 
           ))
         }
         <Pagination 
