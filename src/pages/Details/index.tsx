@@ -1,6 +1,15 @@
+import { DetailsContainer, DetailsLeftContainer, DetailsRightContainer } from "./style"
+
 function Details () {
   return (
-    <b>Details page</b>
+    <DetailsContainer>
+      <DetailsLeftContainer>
+
+      </DetailsLeftContainer>
+      <DetailsRightContainer>
+        
+      </DetailsRightContainer>
+    </DetailsContainer>
   )
 }
 export default Details

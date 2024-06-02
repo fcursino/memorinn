@@ -4,7 +4,8 @@ export const PaginationContainer = styled.div`
     background-color: transparent;
     position: relative;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    align-items: center;
 `
 
 export const PaginationArrow = styled.button`
