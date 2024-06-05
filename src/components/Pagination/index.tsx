@@ -11,11 +11,11 @@ const Pagination: React.FC<PaginationProps> = ({searchPage, updateSearchPage, to
     return (
         <PaginationContainer>
           <PaginationArrow disabled={searchPage === 1} onClick={() => updateSearchPage(searchPage - 1)}>
-            <ArrowLeft htmlColor="black" />
+            <ArrowLeft htmlColor="#151313" />
           </PaginationArrow>
           <b>página {searchPage} de {totalOfPages} </b>
           <PaginationArrow disabled={searchPage === totalOfPages} onClick={() => updateSearchPage(searchPage + 1)}>
-            <ArrowRight htmlColor="black" />
+            <ArrowRight htmlColor="#151313" />
           </PaginationArrow>
         </PaginationContainer>
     )

@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { latoBold } from "../../assets/fonts/Lato/lato";
-import { fadeInUp } from "../../assets/animations/fadeInUp";
+import { fadeInUp } from "../../assets/animations/keyframes";
 
 
 export const HomeBottomContainer = styled.div`

@@ -10,7 +10,7 @@ const Input: React.FC<InputProps> = ({ search, children, changeSearch }) => {
 
   return (
     <InputContainer>
-      <InputText value={search} onChange={e => changeSearch(e.target.value.replace('  ', ' ').replace(' ', '+'))} />
+      <InputText value={search} onChange={e => changeSearch(e.target.value)} />
       {children}
     </InputContainer>
   )

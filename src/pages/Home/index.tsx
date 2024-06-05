@@ -9,6 +9,7 @@ import bookAPI from '../../services/bookAPI'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Pagination from '../../components/Pagination'
+import Loading from '../../components/Loading'
 
 interface Result {
   title: string;
@@ -44,9 +45,8 @@ function Home () {
 
   async function searchBooks() {
     try {
-      if(!isSearchEnable) return false
-      setIsSearchEnable(false)
-      const response = await bookAPI.get(`${search}`.replace('/', '').concat(`&page=${searchPage}&limit=10`));
+      const searchUrl = search.replace('  ', ' ').replace(' ', '+').concat(`&page=${searchPage}&limit=10`)
+      const response = await bookAPI.get(`${searchUrl}`.replace('/', ''));
       setSearchResults(response.data.docs)
       const newTotalOfPages = Math.ceil(response.data.numFound / 10);
       setTotalOfPages(newTotalOfPages)
@@ -59,6 +59,7 @@ function Home () {
   }
 
   function clearSearch() {
+    setSearchPage(1)
     setSearch("")
     setSearchResults([])
   }
@@ -66,6 +67,13 @@ function Home () {
   function updateSearchPage(newPage: number) {
     if(newPage === 0 || !isSearchEnable) return false
     setSearchPage(newPage)
+  }
+
+  function searchPreparation() {
+    if(!isSearchEnable) return false
+    setIsSearchEnable(false)
+    setSearchPage(1)
+    searchBooks()
   }
 
   useEffect(() => {
@@ -85,23 +93,23 @@ function Home () {
           Pesquise por seus livros favoritos e veja o que outras pessoas comentaram sobre eles
         </HomeSearchTitle>
         <Input changeSearch={setSearch} search={search}>
-          {
-            !searchResults.length ?
-            <Icon onClick={searchBooks}>
+            <Icon onClick={searchPreparation}>
               <Search 
                 titleAccess='buscar' 
                 color="inherit" 
               />
-            </Icon> :
-            <Icon onClick={clearSearch} >
-              <Clear 
-                titleAccess='limpar' 
-                color="inherit" 
-              />
-            </Icon>
-          }
+            </Icon>   
+            {
+              search ?
+              <Icon onClick={clearSearch} >
+                <Clear 
+                  titleAccess='limpar' 
+                  color="inherit" 
+                />
+              </Icon> : null
+            }       
         </Input>
-        {searchResults.length ?
+        {searchResults.length && isSearchEnable ?
         <>
         {
           searchResults.map((result: Result) => (
@@ -118,6 +126,10 @@ function Home () {
           totalOfPages={totalOfPages}  
         />
         </> : null
+        }
+        {
+          !isSearchEnable ?
+          <Loading message='Procurando...' /> : null
         }
         
       </HomeLeftContainer>
