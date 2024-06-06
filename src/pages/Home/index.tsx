@@ -43,10 +43,16 @@ function Home () {
   const [totalOfPages, setTotalOfPages] = useState(0)
   const [isSearchEnable, setIsSearchEnable] = useState(true)
 
+  async function searchSortedBooks() {
+    const searchUrl = '/search.json?sort=rating'
+    const response = await bookAPI.get(searchUrl)
+    console.log(response.data)
+  }
+
   async function searchBooks() {
     try {
       const searchUrl = search.replace('  ', ' ').replace(' ', '+').concat(`&page=${searchPage}&limit=10`)
-      const response = await bookAPI.get(`${searchUrl}`.replace('/', ''));
+      const response = await bookAPI.get(`/search.json?title=${searchUrl}`.replace('/', ''));
       setSearchResults(response.data.docs)
       const newTotalOfPages = Math.ceil(response.data.numFound / 10);
       setTotalOfPages(newTotalOfPages)
@@ -77,6 +83,7 @@ function Home () {
   }
 
   useEffect(() => {
+    searchSortedBooks()
     searchBooks();
   }, [searchPage]);
 
