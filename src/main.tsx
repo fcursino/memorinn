@@ -14,7 +14,7 @@ ReactDOM.render(
     <Router>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/details' element={<Details />} />
+        <Route path='/details/:title/:author' element={<Details />} />
       </Routes>
     </Router>
   </React.StrictMode>,
