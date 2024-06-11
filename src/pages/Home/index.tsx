@@ -120,7 +120,7 @@ function Home () {
         <>
         {
           searchResults.map((result: Result) => (
-            <Link to={`details/${result.title}/${result.author_name[0] || 'desconhecido'}`}>
+            <Link to={`details/${result.title}/${result.author_name ? result.author_name[0] : 'desconhecido'}`}>
               <ListItem type='search'>
                 <b>{result.title}</b> escrito por {result.author_name ? result.author_name[0] : 'desconhecido'}
               </ListItem>
