@@ -17,7 +17,7 @@ function Details () {
           "role":"user",
           "parts":[
             {
-              text:`Gere um resumo, em português brasileiro, sobre o livro ${title}, do autor ${author}`
+              text:`Gere um resumo, em português brasileiro, sobre o livro ${title}, do autor ${author}. Caso você não encontre informações sobre o livro, retorne simplesmente uma string vazia como resposta.`
             }
           ]
         }
