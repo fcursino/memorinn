@@ -24,7 +24,6 @@ function Details () {
       ]
     })
     setSummary(response.data.candidates[0].content.parts[0].text)
-    console.log(response.data.candidates[0].content.parts[0].text)
   }
   useEffect(() => {
     generateSummary()
