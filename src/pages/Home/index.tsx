@@ -17,24 +17,10 @@ interface Result {
   [key: string]: unknown;
 }
 
-const books = [
-  {
-    name: "Nome do livro1",
-    author: "Nome do autor1"
-  },
-  {
-    name: "Nome do livro2",
-    author: "Nome do autor2"
-  },
-  {
-    name: "Nome do livro3",
-    author: "Nome do autor3"
-  },
-  {
-    name: "Nome do livro4",
-    author: "Nome do autor4"
-  },
-]
+interface Ranked {
+  ratings_average: number;
+  [key: string]: unknown;
+}
 
 function Home () {
   const [search, setSearch] = useState('')
