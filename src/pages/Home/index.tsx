@@ -155,9 +155,6 @@ function Home () {
     
       </HomeRightContainer>
       </HomeBottomContainer>
-      
-      
-      
     </HomeContainer>
   )
 }
