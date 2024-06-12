@@ -28,7 +28,16 @@ function Home () {
   const [searchResults, setSearchResults] = useState([])
   const [totalOfPages, setTotalOfPages] = useState(0)
   const [isSearchEnable, setIsSearchEnable] = useState(true)
-
+  const [rankedResults, setRankedResults] = useState<Result[]>([])
+  
+  async function sortedByRating() {
+    try {
+      const response = await bookAPI.get(`/search.json?subject=literature&sort=rating desc&page=1&limit=10`)
+      setRankedResults(response.data.docs.sort((a: Ranked, b: Ranked) => b.ratings_average - a.ratings_average))
+    } catch (error) {
+      console.error('Error fetching books:', error);
+    }
+  }
   async function searchBooks() {
     try {
       const searchUrl = search.replace('  ', ' ').replace(' ', '+').concat(`&page=${searchPage}&limit=10`)
@@ -63,6 +72,7 @@ function Home () {
   }
 
   useEffect(() => {
+    sortedByRating();
     searchBooks();
   }, [searchPage]);
 
