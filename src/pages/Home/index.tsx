@@ -41,7 +41,7 @@ function Home () {
   async function searchBooks() {
     try {
       const searchUrl = search.replace('  ', ' ').replace(' ', '+').concat(`&page=${searchPage}&limit=10`)
-      const response = await bookAPI.get(`/search.json?title=${searchUrl}`.replace('/', ''));
+      const response = await bookAPI.get(`/search.json?subject=literature&title=${searchUrl}`.replace('/', ''));
       setSearchResults(response.data.docs)
       const newTotalOfPages = Math.ceil(response.data.numFound / 10);
       setTotalOfPages(newTotalOfPages)
@@ -134,21 +134,21 @@ function Home () {
           Destaques da semana:
         </HomeFeaturedBooksTitle>
         <HomeFeaturedBooks>
-        <Card title='Titulo de card' marginTop={30}>
-        <p>Lorem ipsum dolor sit amet.</p>
+        <Card title={rankedResults.length ? rankedResults[1].title : ''} marginTop={30}>
+        <p>{}</p>
       </Card>
-      <Card title='Titulo de card'>
-        <p>Lorem ipsum dolor sit amet.</p>
+      <Card title={rankedResults.length ? rankedResults[0].title : ''}>
+        <p>{}</p>
       </Card>
-      <Card title='Titulo de card' marginTop={30}>
-        <p>Lorem ipsum dolor sit amet.r sit amet.sdfsadfs asfasrase serwrwe4 eraserwe we  werwerr</p>
+      <Card title={rankedResults.length ? rankedResults[2].title : ''} marginTop={30}>
+        <p>{}</p>
       </Card>
         </HomeFeaturedBooks>
       
       {
-        books.map((book) => (
+        rankedResults.slice(3, 10).map((book) => (
           <ListItem type='ranking'>
-            <b>{book.name}</b> escrito por {book.author}
+            <b>{book.title}</b> escrito por {book.author_name}
           </ListItem>
         ))
       }
