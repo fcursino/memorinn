@@ -149,7 +149,6 @@ function Home () {
            </Card>
           </> : null 
           }
-       
         </HomeFeaturedBooks>
       
       {
