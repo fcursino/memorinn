@@ -136,15 +136,20 @@ function Home () {
           Destaques da semana:
         </HomeFeaturedBooksTitle>
         <HomeFeaturedBooks>
-        <Card title={rankedResults.length ? rankedResults[1].title : ''} marginTop={30}>
-        <p><Stars htmlColor='#C0C0C0' fontSize='large'/>{rankedResults[1].ratings_average.toFixed(2)}</p>
-      </Card>
-      <Card title={rankedResults.length ? rankedResults[0].title : ''}>
-        <p><Stars htmlColor='#FFD700' fontSize='large'/>{rankedResults[0].ratings_average.toFixed(2)}</p>
-      </Card>
-      <Card title={rankedResults.length ? rankedResults[2].title : ''} marginTop={30}>
-        <p><Stars htmlColor='#CD7F32' fontSize='large'/>{rankedResults[2].ratings_average.toFixed(2)}</p>
-      </Card>
+          {rankedResults.length ?
+          <>
+          <Card title={rankedResults[1].title} marginTop={30}>
+             <p><Stars htmlColor='#C0C0C0' fontSize='large'/>{rankedResults[1].ratings_average.toFixed(2)}</p>
+           </Card>
+           <Card title={rankedResults[0].title}>
+             <p><Stars htmlColor='#FFD700' fontSize='large'/>{rankedResults[0].ratings_average.toFixed(2)}</p>
+           </Card>
+           <Card title={rankedResults[2].title} marginTop={30}>
+             <p><Stars htmlColor='#CD7F32' fontSize='large'/>{rankedResults[2].ratings_average.toFixed(2)}</p>
+           </Card>
+          </> : null 
+          }
+       
         </HomeFeaturedBooks>
       
       {
