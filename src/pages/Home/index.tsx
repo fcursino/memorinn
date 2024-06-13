@@ -1,4 +1,4 @@
-import { Search, Clear } from '@material-ui/icons'
+import { Search, Clear, StarRate, Stars } from '@material-ui/icons'
 import Card from '../../components/Card'
 import Input from '../../components/Input'
 import ListItem from '../../components/ListItem'
@@ -18,6 +18,8 @@ interface Result {
 }
 
 interface Ranked {
+  title: string;
+  author_name: string[];
   ratings_average: number;
   [key: string]: unknown;
 }
@@ -28,7 +30,7 @@ function Home () {
   const [searchResults, setSearchResults] = useState([])
   const [totalOfPages, setTotalOfPages] = useState(0)
   const [isSearchEnable, setIsSearchEnable] = useState(true)
-  const [rankedResults, setRankedResults] = useState<Result[]>([])
+  const [rankedResults, setRankedResults] = useState<Ranked[]>([])
   
   async function sortedByRating() {
     try {
@@ -135,20 +137,20 @@ function Home () {
         </HomeFeaturedBooksTitle>
         <HomeFeaturedBooks>
         <Card title={rankedResults.length ? rankedResults[1].title : ''} marginTop={30}>
-        <p>{}</p>
+        <p><Stars htmlColor='#C0C0C0' fontSize='large'/>{rankedResults[1].ratings_average.toFixed(2)}</p>
       </Card>
       <Card title={rankedResults.length ? rankedResults[0].title : ''}>
-        <p>{}</p>
+        <p><Stars htmlColor='#FFD700' fontSize='large'/>{rankedResults[0].ratings_average.toFixed(2)}</p>
       </Card>
       <Card title={rankedResults.length ? rankedResults[2].title : ''} marginTop={30}>
-        <p>{}</p>
+        <p><Stars htmlColor='#CD7F32' fontSize='large'/>{rankedResults[2].ratings_average.toFixed(2)}</p>
       </Card>
         </HomeFeaturedBooks>
       
       {
         rankedResults.slice(3, 10).map((book) => (
           <ListItem type='ranking'>
-            <b>{book.title}</b> escrito por {book.author_name}
+            <b>{book.title} - {book.ratings_average.toFixed(2)}<StarRate /></b> escrito por {book.author_name}
           </ListItem>
         ))
       }
