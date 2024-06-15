@@ -5,6 +5,10 @@ export const LogoContainer = styled.div`
   height: 100px;
   width: 100px;
   text-align: center;
+
+  @media screen and (max-width: 1000px) {
+    margin: auto;
+  }
 `
 
 export const LogoImage = styled.img`

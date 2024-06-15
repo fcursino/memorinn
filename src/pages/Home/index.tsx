@@ -3,7 +3,7 @@ import Card from '../../components/Card'
 import Input from '../../components/Input'
 import ListItem from '../../components/ListItem'
 import Logo from '../../components/Logo'
-import { HomeBottomContainer, HomeContainer, HomeFeaturedBooks, HomeFeaturedBooksTitle, HomeLeftContainer, HomeLogoTitle, HomeRightContainer, HomeSearchTitle } from './style'
+import { HomeBottomContainer, HomeContainer, HomeLogoContainer, HomeFeaturedBooks, HomeFeaturedBooksTitle, HomeLeftContainer, HomeLogoTitle, HomeRightContainer, HomeSearchTitle } from './style'
 import Icon from '../../components/Icon'
 import bookAPI from '../../services/bookAPI'
 import { useEffect, useState } from 'react'
@@ -85,11 +85,13 @@ function Home () {
 
   return (
     <HomeContainer>
+      <HomeLogoContainer>
       <Logo>
         <HomeLogoTitle>
           MemorInn
         </HomeLogoTitle>
       </Logo>
+      </HomeLogoContainer>
       <HomeBottomContainer>
       <HomeLeftContainer>
         <HomeSearchTitle>

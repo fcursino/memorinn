@@ -5,22 +5,45 @@ import { fadeInUp } from "../../assets/animations/keyframes";
 
 export const HomeBottomContainer = styled.div`
   display: flex;
+
+  @media screen and (max-width: 1000px) {
+    display: block;
+  }
 `
 
 export const HomeContainer = styled.div`
     margin: 10px 30px;
 `
 
+export const HomeLogoContainer = styled.div`
+  display: block;
+
+  @media screen and (max-width: 1000px) {
+    display: block;
+    margin: 30px auto;
+  }  
+`
+
 export const HomeLeftContainer = styled.div`
   width: 55%;
   margin: auto;
   position: relative;
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    margin: auto;
+  }
 `
 
 export const HomeRightContainer = styled.div`
   width: 45%;
   margin: 0 50px;
   animation: ${fadeInUp} 0.7s ease-in-out;
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    margin: auto;
+  }
 `
 
 export const HomeBooksList = styled.div`
@@ -63,4 +86,8 @@ export const HomeSearchTitle = styled.text`
   display: block;
   max-width: 600px;
   margin: auto;
+
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
 `
