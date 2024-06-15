@@ -51,3 +51,14 @@ export const DetailsNoCommentsMessage = styled.text`
     position: relative;
     font-weight: 600;
 `
+
+export const DetailsBookTitle = styled.h2`
+  ${latoBold};
+  color: #151313;
+  font-size: 37px;
+  font-family: 'Lato', sans-serif;
+  position: relative;
+  font-weight: 600;
+  max-width: 80%;
+  text-align: start;
+`

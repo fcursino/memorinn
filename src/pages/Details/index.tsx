@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Logo from "../../components/Logo"
-import { DetailsBottomContainer, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer } from "./style"
+import { DetailsBookTitle, DetailsBottomContainer, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer } from "./style"
 import geminiAPI from "../../services/geminiAPI"
 import { useParams } from "react-router-dom"
 
@@ -37,6 +37,9 @@ function Details () {
       </Logo>
       <DetailsBottomContainer>
         <DetailsLeftContainer>
+          <DetailsBookTitle>
+            {title}
+          </DetailsBookTitle>
           <DetailsContentContainer>
           <p>{summary}</p>
           </DetailsContentContainer>

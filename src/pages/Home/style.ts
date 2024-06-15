@@ -19,7 +19,7 @@ export const HomeLeftContainer = styled.div`
 
 export const HomeRightContainer = styled.div`
   width: 45%;
-  margin: 50px;
+  margin: 0 50px;
   animation: ${fadeInUp} 0.7s ease-in-out;
 `
 
