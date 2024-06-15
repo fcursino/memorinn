@@ -7,7 +7,7 @@ import { HomeBottomContainer, HomeContainer, HomeFeaturedBooks, HomeFeaturedBook
 import Icon from '../../components/Icon'
 import bookAPI from '../../services/bookAPI'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Pagination from '../../components/Pagination'
 import Loading from '../../components/Loading'
 
@@ -31,6 +31,7 @@ function Home () {
   const [totalOfPages, setTotalOfPages] = useState(0)
   const [isSearchEnable, setIsSearchEnable] = useState(true)
   const [rankedResults, setRankedResults] = useState<Ranked[]>([])
+  const navigate = useNavigate()
   
   async function sortedByRating() {
     try {
@@ -64,6 +65,10 @@ function Home () {
   function updateSearchPage(newPage: number) {
     if(newPage === 0 || !isSearchEnable) return false
     setSearchPage(newPage)
+  }
+
+  function navigateToDetails(book: Ranked) {
+    navigate(`/details/${book.title}/${book.author_name}`)
   }
 
   function searchPreparation() {
@@ -138,13 +143,13 @@ function Home () {
         <HomeFeaturedBooks>
           {rankedResults.length ?
           <>
-          <Card title={rankedResults[1].title} marginTop={30}>
+          <Card onClick={() => navigateToDetails(rankedResults[1])} title={rankedResults[1].title} marginTop={30}>
              <p><Stars htmlColor='#C0C0C0' fontSize='large'/>{rankedResults[1].ratings_average.toFixed(2)}</p>
            </Card>
-           <Card title={rankedResults[0].title}>
+           <Card onClick={() => navigateToDetails(rankedResults[0])} title={rankedResults[0].title}>
              <p><Stars htmlColor='#FFD700' fontSize='large'/>{rankedResults[0].ratings_average.toFixed(2)}</p>
            </Card>
-           <Card title={rankedResults[2].title} marginTop={30}>
+           <Card onClick={() => navigateToDetails(rankedResults[2])} title={rankedResults[2].title} marginTop={30}>
              <p><Stars htmlColor='#CD7F32' fontSize='large'/>{rankedResults[2].ratings_average.toFixed(2)}</p>
            </Card>
           </> : null 
@@ -153,9 +158,12 @@ function Home () {
       
       {
         rankedResults.slice(3, 10).map((book) => (
-          <ListItem type='ranking'>
-            <b>{book.title} - {book.ratings_average.toFixed(2)}<StarRate /></b> escrito por {book.author_name}
-          </ListItem>
+          <Link to={`details/${book.title}/${book.author_name ? book.author_name[0] : 'desconhecido'}`}>
+            <ListItem type='ranking'>
+              <b>{book.title} - {book.ratings_average.toFixed(2)}<StarRate /></b> escrito por {book.author_name}
+            </ListItem>
+          </Link>
+          
         ))
       }
     
