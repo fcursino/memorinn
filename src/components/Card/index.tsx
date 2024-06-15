@@ -3,12 +3,13 @@ import { CardContainer, CardTitle, CardContent } from "./style";
 interface CardProps {
     children: React.ReactNode,
     title: string,
-    marginTop?: number
+    marginTop?: number,
+    onClick?: () => void
 }
 
-const Card: React.FC<CardProps> = ({children, title, marginTop}) => {
+const Card: React.FC<CardProps> = ({children, title, marginTop, onClick}) => {
     return (
-        <CardContainer marginTop={marginTop || 0}>
+        <CardContainer onClick={onClick} marginTop={marginTop || 0}>
             <CardTitle>
                 {title}
             </CardTitle>
