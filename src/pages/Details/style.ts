@@ -3,6 +3,10 @@ import { latoBold } from "../../assets/fonts/Lato/lato";
 
 export const DetailsBottomContainer = styled.div`
   display: flex;
+
+  @media screen and (max-width: 1000px) {
+    display: block;
+  }
 `
 
 export const DetailsContainer = styled.div`
@@ -11,10 +15,21 @@ export const DetailsContainer = styled.div`
 
 export const DetailsLeftContainer = styled.div`
   width: 65%;
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    margin: auto;
+    display: ruby;
+  }
 `
 
 export const DetailsRightContainer = styled.div`
   width: 35%;
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    margin: auto;
+  }
 `
 
 export const DetailsContentContainer = styled.div`
@@ -61,4 +76,9 @@ export const DetailsBookTitle = styled.h2`
   font-weight: 600;
   max-width: 80%;
   text-align: start;
+
+  @media screen and (max-width: 1000px) {
+    text-align: center;
+    max-width: 100%;
+  }
 `
