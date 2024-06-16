@@ -40,9 +40,12 @@ function Details () {
           <DetailsBookTitle>
             {title}
           </DetailsBookTitle>
-          <DetailsContentContainer>
-          <p>{summary}</p>
-          </DetailsContentContainer>
+          {summary ? 
+            <DetailsContentContainer>
+              <p>{summary}</p>
+            </DetailsContentContainer>
+            : null
+          }
         </DetailsLeftContainer>
         <DetailsRightContainer>
           <DetailsNoCommentsMessage>
