@@ -91,3 +91,15 @@ export const HomeSearchTitle = styled.text`
     display: none;
   }
 `
+
+export const HomeNoResultsMessage = styled.text`
+    ${latoBold};
+    color: rgba(21, 19, 19, 0.15);
+    font-size:24px;
+    display: inline-table;
+    max-width: 300px;
+    margin: 20px;
+    font-family: 'Lato', sans-serif;
+    position: relative;
+    font-weight: 600;
+`

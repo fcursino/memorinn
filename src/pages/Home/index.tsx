@@ -1,9 +1,9 @@
-import { Search, Clear, StarRate, Stars } from '@material-ui/icons'
+import { Search, Clear, StarRate, Stars, SentimentVeryDissatisfied } from '@material-ui/icons'
 import Card from '../../components/Card'
 import Input from '../../components/Input'
 import ListItem from '../../components/ListItem'
 import Logo from '../../components/Logo'
-import { HomeBottomContainer, HomeContainer, HomeLogoContainer, HomeFeaturedBooks, HomeFeaturedBooksTitle, HomeLeftContainer, HomeLogoTitle, HomeRightContainer, HomeSearchTitle } from './style'
+import { HomeBottomContainer, HomeContainer, HomeLogoContainer, HomeFeaturedBooks, HomeFeaturedBooksTitle, HomeLeftContainer, HomeLogoTitle, HomeRightContainer, HomeSearchTitle, HomeNoResultsMessage } from './style'
 import Icon from '../../components/Icon'
 import bookAPI from '../../services/bookAPI'
 import { useEffect, useState } from 'react'
@@ -26,6 +26,7 @@ interface Ranked {
 
 function Home () {
   const [search, setSearch] = useState('')
+  const [noResults, setNoresults] = useState(false)
   const [searchPage, setSearchPage] = useState(1)
   const [searchResults, setSearchResults] = useState([])
   const [totalOfPages, setTotalOfPages] = useState(0)
@@ -43,6 +44,7 @@ function Home () {
   }
   async function searchBooks() {
     try {
+      setNoresults(false)
       const searchUrl = search.replace('  ', ' ').replace(' ', '+').concat(`&page=${searchPage}&limit=10`)
       const response = await bookAPI.get(`/search.json?subject=literature&title=${searchUrl}`.replace('/', ''));
       setSearchResults(response.data.docs)
@@ -50,6 +52,7 @@ function Home () {
       setTotalOfPages(newTotalOfPages)
       setTimeout(() => {
         setIsSearchEnable(true)
+        setNoresults(response.data.docs.length === 0)
       }, 1000)
     } catch (error) {
       console.error('Error fetching books:', error);
@@ -60,6 +63,7 @@ function Home () {
     setSearchPage(1)
     setSearch("")
     setSearchResults([])
+    setNoresults(false)
   }
 
   function updateSearchPage(newPage: number) {
@@ -134,9 +138,16 @@ function Home () {
         }
         {
           !isSearchEnable ?
-          <Loading message='Procurando...' /> : null
+          <Loading message='Procurando...' /> : 
+          !searchResults.length
         }
-        
+        {
+          noResults ?
+          <HomeNoResultsMessage>
+            Não encontramos nenhum resultado para sua pesquisa <br /> 
+            <SentimentVeryDissatisfied fontSize='large' />
+          </HomeNoResultsMessage> : null
+        }
       </HomeLeftContainer>
       <HomeRightContainer>
         <HomeFeaturedBooksTitle>
