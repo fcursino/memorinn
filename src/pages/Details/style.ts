@@ -25,6 +25,8 @@ export const DetailsLeftContainer = styled.div`
 
 export const DetailsRightContainer = styled.div`
   width: 35%;
+  display: grid;
+  place-items: center;
 
   @media screen and (max-width: 1000px) {
     width: 100%;
