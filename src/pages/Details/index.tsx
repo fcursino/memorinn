@@ -42,7 +42,7 @@ function Details () {
           </DetailsBookTitle>
           {summary ? 
             <DetailsContentContainer>
-              <p>{summary}</p>
+              <div dangerouslySetInnerHTML={{ __html: summary }} />
             </DetailsContentContainer>
             : null
           }
