@@ -17,7 +17,7 @@ function Details () {
           "role":"user",
           "parts":[
             {
-              text:`Gere um resumo, em português brasileiro, sobre o livro ${title}, do autor ${author}. Caso você não encontre informações sobre o livro, retorne simplesmente uma string vazia como resposta.`
+              text:`Gere uma sinopse, em português brasileiro, no formato html sobre o livro ${title}, do autor ${author}. Retorne somente o que estiver em tags html, sem título, e caso você não encontre informações sobre o livro, retorne simplesmente uma string vazia como resposta.`
             }
           ]
         }
