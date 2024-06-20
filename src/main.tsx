@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/index.tsx'
 import Home from './pages/Home/index.tsx'
 import Background from './components/Background/index.tsx'
 import Details from './pages/Details/index.tsx'
+import Login from './pages/Login/index.tsx'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.render(
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/details/:title/:author' element={<Details />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
     </Router>
   </React.StrictMode>,
