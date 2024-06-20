@@ -101,7 +101,7 @@ function Home () {
         <HomeSearchTitle>
           Pesquise por seus livros favoritos e veja o que outras pessoas comentaram sobre eles
         </HomeSearchTitle>
-        <Input changeSearch={setSearch} search={search}>
+        <Input changeSearch={setSearch} value={search}>
             <Icon onClick={searchPreparation}>
               <Search 
                 titleAccess='buscar' 
