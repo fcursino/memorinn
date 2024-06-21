@@ -7,10 +7,9 @@ export const LoginContainer = styled.div`
   min-width: 50%;
   border-radius: 20px;
   padding: 20px;
-  margin: auto;
+  margin: 25vh auto;
   display: flex;
   flex-direction: column;
-  top: 50%;
   gap: 25px;
   height: fit-content;
   place-items: center;
