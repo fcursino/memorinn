@@ -1,24 +1,24 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
-import Card from './components/Card'
-import ListItem from './components/ListItem'
+import Background from './components/Background'
+import Navbar from './components/Navbar'
+import Login from './pages/Login'
+import Home from './pages/Home'
+import Details from './pages/Details'
 
 function App() {
 
   return (
     <>
-      <Card title='Titulo de card'>
-        <p>Lorem ipsum dolor sit amet.</p>
-      </Card>
-      <Card title='Titulo de card'>
-        <p>Lorem ipsum dolor sit amet.</p>
-      </Card>
-      <Card title='Titulo de card'>
-        <p>Lorem ipsum dolor sit amet.r sit amet.sdfsadfs asfasrase serwrwe4 eraserwe we  werwerr</p>
-      </Card>
-      <ListItem type='search'>
-        Lorem ipsum dolor sit amet.sdfsadfs asfasrase serwrwe4 eraserwe we  werwerr
-      </ListItem>
-    <ListItem type='ranking' />
+      <Background />
+      <Navbar/>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/details/:title/:author' element={<Details />} />
+          <Route path='/login' element={<Login />} />
+        </Routes>
+      </Router>
     </>
     
   )
