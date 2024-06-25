@@ -37,4 +37,9 @@ export const LoginButton = styled.button`
   &:hover {
     transform: scale(1);
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
 `
