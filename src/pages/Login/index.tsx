@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Input from "../../components/Input"
 import Logo from "../../components/Logo"
-import { LoginButton, LoginContainer, LoginLogoTitle } from "./style"
+import { LoginButton, LoginContainer, LoginLogoTitle, LoginWarning } from "./style"
 import { useAuth } from '../../hooks/AuthContext'
 
 function Login () {
@@ -29,9 +29,9 @@ function Login () {
         <LoginLogoTitle>MemorInn</LoginLogoTitle>
       </Logo>
       <Input placeholder="e-mail" value={email} type="email" changeSearch={setEmail} />
-      {!email.trim() && validated ? <small>E-mail obrigatório</small> : null}
+      <LoginWarning>{!email.trim() && validated ? "E-mail obrigatório" : null}</LoginWarning>
       <Input placeholder="senha" value={password} type="password" changeSearch={setPassword} />
-      {!password.trim() && validated ? <small>Senha obrigatória</small> : null}
+      <LoginWarning>{!password.trim() && validated ? "Senha obrigatória" : null}</LoginWarning>
       <LoginButton onClick={handleLogin} disabled={!loginEnabled}>Login</LoginButton>
     </LoginContainer>
   )

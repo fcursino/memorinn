@@ -10,7 +10,7 @@ export const LoginContainer = styled.div`
   margin: 25vh auto;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 15px;
   height: fit-content;
   place-items: center;
   width: fit-content;
@@ -42,4 +42,10 @@ export const LoginButton = styled.button`
     opacity: 0.5;
     cursor: default;
   }
+`
+
+export const LoginWarning = styled.small`
+  color: red;
+  position: relative;
+  top: -10px;
 `
