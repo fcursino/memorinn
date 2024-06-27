@@ -3,6 +3,7 @@ import Input from "../../components/Input"
 import Logo from "../../components/Logo"
 import { LoginButton, LoginContainer, LoginLogoTitle, LoginWarning } from "./style"
 import { useAuth } from '../../hooks/AuthContext'
+import { Link } from "react-router-dom"
 
 function Login () {
   const [email, setEmail] = useState("")
@@ -33,6 +34,9 @@ function Login () {
       <Input placeholder="senha" value={password} type="password" changeSearch={setPassword} />
       <LoginWarning>{!password.trim() && validated ? "Senha obrigatória" : null}</LoginWarning>
       <LoginButton onClick={handleLogin} disabled={!loginEnabled}>Login</LoginButton>
+      <Link to={`/register${email.trim() ? `?email=${email}` : ''}`}>
+        <LoginWarning>Novo por aqui? Faça seu cadastro</LoginWarning>
+      </Link>
     </LoginContainer>
   )
 }
