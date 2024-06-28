@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import Logo from "../../components/Logo"
-import { DetailsBookTitle, DetailsBottomContainer, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer } from "./style"
+import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentContainer, DetailsCommentTextarea, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer } from "./style"
 import geminiAPI from "../../services/geminiAPI"
 import { useParams } from "react-router-dom"
+import Input from "../../components/Input"
 
 function Details () {
   const { title, author } = useParams()
   const [summary, setSummary] = useState("")
+  const [comment, setComment] = useState("")
 
   async function generateSummary() {
     const response = await geminiAPI.post(`v1beta/models/gemini-1.5-flash:generateContent`, {
@@ -46,6 +48,13 @@ function Details () {
             </DetailsContentContainer>
             : null
           }
+          <DetailsCommentContainer>
+            <DetailsCommentTextarea 
+              placeholder="deixe seu comentário aqui..." 
+              value={comment} 
+              onChange={e => setComment(e.target.value)}
+            />
+          </DetailsCommentContainer>
         </DetailsLeftContainer>
         <DetailsRightContainer>
           <DetailsNoCommentsMessage>

@@ -84,3 +84,27 @@ export const DetailsBookTitle = styled.h2`
     max-width: 100%;
   }
 `
+
+export const DetailsCommentContainer = styled.div`
+  max-width: 80%;
+  margin: 0 10px;
+  position: relative;
+  border: 2px solid #151313;
+  border-radius: 8px;
+`
+
+export const DetailsCommentTextarea = styled.textarea`
+  border: 0 solid transparent;
+  border-radius: 8px;
+  color: #151313;
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  height: 50px;
+  padding: 8px;
+  width: -webkit-fill-available;
+  background-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+`
