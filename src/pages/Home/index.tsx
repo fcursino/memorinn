@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Pagination from '../../components/Pagination'
 import Loading from '../../components/Loading'
+import { useDetails } from '../../hooks/DetailsContext'
 
 interface Result {
   title: string;
@@ -32,6 +33,7 @@ function Home () {
   const [totalOfPages, setTotalOfPages] = useState(0)
   const [isSearchEnable, setIsSearchEnable] = useState(true)
   const [rankedResults, setRankedResults] = useState<Ranked[]>([])
+  const { setBook } = useDetails()
   const navigate = useNavigate()
   
   async function sortedByRating() {
@@ -72,6 +74,11 @@ function Home () {
   }
 
   function navigateToDetails(book: Ranked) {
+    setBook({
+      title: book.title,
+      author: book.author_name[0],
+      id: '2'
+    })
     navigate(`/details/${book.title}/${book.author_name}`)
   }
 

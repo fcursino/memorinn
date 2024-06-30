@@ -2,13 +2,12 @@ import { useEffect, useState } from "react"
 import Logo from "../../components/Logo"
 import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentContainer, DetailsCommentTextarea, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer } from "./style"
 import geminiAPI from "../../services/geminiAPI"
-import { useParams } from "react-router-dom"
-import Input from "../../components/Input"
+import { useDetails } from "../../hooks/DetailsContext"
 
 function Details () {
-  const { title, author } = useParams()
   const [summary, setSummary] = useState("")
   const [comment, setComment] = useState("")
+  const { book } = useDetails()
 
   async function generateSummary() {
     const response = await geminiAPI.post(`v1beta/models/gemini-1.5-flash:generateContent`, {
@@ -19,7 +18,7 @@ function Details () {
           "role":"user",
           "parts":[
             {
-              text:`Gere uma sinopse, em português brasileiro, no formato html sobre o livro ${title}, do autor ${author}. Retorne somente o que estiver em tags html, sem título, e caso você não encontre informações sobre o livro, retorne simplesmente uma string vazia como resposta.`
+              text:`Gere uma sinopse, em português brasileiro, no formato html sobre o livro ${book?.title}, do autor ${book?.author}. Retorne somente o que estiver em tags html, sem título, e caso você não encontre informações sobre o livro, retorne simplesmente uma string vazia como resposta.`
             }
           ]
         }
@@ -40,7 +39,7 @@ function Details () {
       <DetailsBottomContainer>
         <DetailsLeftContainer>
           <DetailsBookTitle>
-            {title}
+            {book?.title}
           </DetailsBookTitle>
           {summary ? 
             <DetailsContentContainer>
