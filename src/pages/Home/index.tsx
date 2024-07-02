@@ -22,6 +22,7 @@ interface Ranked {
   title: string;
   author_name: string[];
   ratings_average: number;
+  key?: string;
   [key: string]: unknown;
 }
 
@@ -77,7 +78,7 @@ function Home () {
     setBook({
       title: book.title,
       author: book.author_name[0],
-      id: '2'
+      id: book.key || ''
     })
     navigate(`/details/${book.title}/${book.author_name}`)
   }

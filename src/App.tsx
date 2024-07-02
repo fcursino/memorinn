@@ -7,7 +7,6 @@ import Home from './pages/Home'
 import Details from './pages/Details'
 import Register from './pages/Register'
 import { DetailsProvider } from './hooks/DetailsContext'
-import React from 'react'
 
 function App() {
 
