@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react"
 import Logo from "../../components/Logo"
-import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentContainer, DetailsCommentTextarea, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer } from "./style"
+import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentButton, DetailsCommentContainer, DetailsCommentTextarea, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer } from "./style"
 import geminiAPI from "../../services/geminiAPI"
+import memorinnAPI from "../../services/memorinnAPI"
 import { useDetails } from "../../hooks/DetailsContext"
+import { useAuth } from "../../hooks/AuthContext"
 
 function Details () {
   const [summary, setSummary] = useState("")
   const [comment, setComment] = useState("")
   const { book } = useDetails()
+  const { user } = useAuth()
 
   async function generateSummary() {
     const response = await geminiAPI.post(`v1beta/models/gemini-1.5-flash:generateContent`, {
@@ -26,8 +29,17 @@ function Details () {
     })
     setSummary(response.data.candidates[0].content.parts[0].text)
   }
+
+  async function registerComment() {
+    const response = await memorinnAPI.post(`/comments`, {
+      text: comment,
+      userOwner: user,
+      bookId: book?.id
+    })
+  }
   useEffect(() => {
     generateSummary()
+    console.log(book)
   },[])
   return (
     <DetailsContainer>
@@ -54,6 +66,9 @@ function Details () {
               onChange={e => setComment(e.target.value)}
             />
           </DetailsCommentContainer>
+          <DetailsCommentButton onClick={registerComment}>
+            Enviar comentário para análise
+          </DetailsCommentButton>
         </DetailsLeftContainer>
         <DetailsRightContainer>
           <DetailsNoCommentsMessage>

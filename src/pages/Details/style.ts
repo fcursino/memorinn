@@ -108,3 +108,22 @@ export const DetailsCommentTextarea = styled.textarea`
     outline: none;
   }
 `
+
+export const DetailsCommentButton = styled.button`
+  background: #B02D2A;
+  color: #fff;
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  display: block;
+  transform: scale(0.98);
+  transition: all .1s ease-in-out;
+
+  &:hover {
+    transform: scale(1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+`
