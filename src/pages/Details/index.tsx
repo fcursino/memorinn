@@ -36,6 +36,7 @@ function Details () {
       userOwner: user,
       bookId: book?.id
     })
+    console.log(response.data)
   }
   useEffect(() => {
     generateSummary()
