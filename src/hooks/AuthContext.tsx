@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import memorinnAPI from '../services/memorinnAPI';
 
 interface User {
   name: string;
@@ -14,7 +15,7 @@ interface Credentials {
 
 interface AuthContextType {
   user: User | null;
-  login: (credentials: Credentials) => User;
+  login: (credentials: Credentials) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -27,15 +28,27 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = (credentials: Credentials) => {
-    const user: User = {
-      name: '',
-      email: credentials.email,
-      userName: '',
-      token: ''
+  const login = async (credentials: Credentials) => {
+
+    try {
+      const response = await memorinnAPI.post('/users/login', {
+        email: credentials.email,
+        password: credentials.password
+      })
+      if(response.data) {
+        setUser({
+          name: response.data.user.name,
+          email: response.data.user.email,
+          userName: response.data.user.userName,
+          token: response.data.token
+        })
+        return true
+      } else {
+        return false
+      }
+    } catch (error: any) {
+      return false
     }
-    setUser(user);
-    return user
   };
 
   const logout = () => {

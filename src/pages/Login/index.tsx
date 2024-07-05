@@ -3,20 +3,25 @@ import Input from "../../components/Input"
 import Logo from "../../components/Logo"
 import { LoginButton, LoginContainer, LoginLogoTitle, LoginWarning } from "./style"
 import { useAuth } from '../../hooks/AuthContext'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function Login () {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loginEnabled, setLoginEnabled] = useState(true)
   const [validated, setValidated] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
   const { login } = useAuth()
+  const navigate = useNavigate()
 
-  function handleLogin () {
+  async function handleLogin () {
+    setLoggedIn(false)
     setLoginEnabled(false)
     try {
       setValidated(false)
-      login({email, password})
+      const response = await login({email, password})
+      if(response) navigate('/')
+      setLoggedIn(!response)
       setValidated(true)
       setLoginEnabled(true)
     } catch (error) {
@@ -34,6 +39,7 @@ function Login () {
       <Input placeholder="senha" value={password} type="password" changeSearch={setPassword} />
       <LoginWarning>{!password.trim() && validated ? "Senha obrigatória" : null}</LoginWarning>
       <LoginButton onClick={handleLogin} disabled={!loginEnabled}>Login</LoginButton>
+      <LoginWarning>{loggedIn && validated ? "Erro ao fazer login. Verifique suas credenciais e tente novamente" : null}</LoginWarning>
       <Link to={`/register${email.trim() ? `?email=${email}` : ''}`}>
         <LoginWarning>Novo por aqui? Faça seu cadastro</LoginWarning>
       </Link>

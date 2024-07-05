@@ -5,12 +5,14 @@ import geminiAPI from "../../services/geminiAPI"
 import memorinnAPI from "../../services/memorinnAPI"
 import { useDetails } from "../../hooks/DetailsContext"
 import { useAuth } from "../../hooks/AuthContext"
+import { useNavigate } from "react-router-dom"
 
 function Details () {
   const [summary, setSummary] = useState("")
   const [comment, setComment] = useState("")
   const { book } = useDetails()
   const { user } = useAuth()
+  const navigate = useNavigate()
 
   async function generateSummary() {
     const response = await geminiAPI.post(`v1beta/models/gemini-1.5-flash:generateContent`, {
@@ -31,6 +33,10 @@ function Details () {
   }
 
   async function registerComment() {
+    if(!user) {
+      navigate('/login')
+      return false
+    }
     const response = await memorinnAPI.post(`/comments`, {
       text: comment,
       userOwner: user,
