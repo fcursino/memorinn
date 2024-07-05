@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom"
 function Details () {
   const [summary, setSummary] = useState("")
   const [comment, setComment] = useState("")
+  const [comments, setComments] = useState([])
   const { book } = useDetails()
   const { user } = useAuth()
   const navigate = useNavigate()
@@ -44,6 +45,10 @@ function Details () {
     })
     console.log(response.data)
   }
+
+  async function searchBookComments() {
+    // const response = await memorinnAPI.get()
+  }
   useEffect(() => {
     generateSummary()
   },[])
@@ -77,9 +82,15 @@ function Details () {
           </DetailsCommentButton>
         </DetailsLeftContainer>
         <DetailsRightContainer>
-          <DetailsNoCommentsMessage>
-            Ainda não temos nenhum comentário sobre este livro
-          </DetailsNoCommentsMessage> 
+          {comments.length === 0 ?
+            <DetailsNoCommentsMessage>
+              Ainda não temos nenhum comentário sobre este livro
+            </DetailsNoCommentsMessage> : 
+            comments.map((comment) => (
+              <h1>{comment}</h1>
+            ))
+          }
+          
         </DetailsRightContainer>
       </DetailsBottomContainer>
     </DetailsContainer>
