@@ -46,7 +46,6 @@ function Details () {
   }
   useEffect(() => {
     generateSummary()
-    console.log(book)
   },[])
   return (
     <DetailsContainer>
