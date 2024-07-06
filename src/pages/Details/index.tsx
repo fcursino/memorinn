@@ -7,6 +7,13 @@ import { useDetails } from "../../hooks/DetailsContext"
 import { useAuth } from "../../hooks/AuthContext"
 import { useNavigate } from "react-router-dom"
 
+interface Comment {
+  text: string;
+  bookId: string;
+  id: string;
+  [key: string]: unknown;
+}
+
 function Details () {
   const [summary, setSummary] = useState("")
   const [comment, setComment] = useState("")
@@ -47,10 +54,14 @@ function Details () {
   }
 
   async function searchBookComments() {
-    // const response = await memorinnAPI.get()
+    const response = await memorinnAPI.post('/comments/book', {
+      bookId: book?.id
+    })
+    setComments(response.data)
   }
   useEffect(() => {
     generateSummary()
+    searchBookComments()
   },[])
   return (
     <DetailsContainer>
@@ -86,8 +97,8 @@ function Details () {
             <DetailsNoCommentsMessage>
               Ainda não temos nenhum comentário sobre este livro
             </DetailsNoCommentsMessage> : 
-            comments.map((comment) => (
-              <h1>{comment}</h1>
+            comments.map((comment: Comment) => (
+              <h1>{comment.text}</h1>
             ))
           }
           
