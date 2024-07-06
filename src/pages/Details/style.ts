@@ -111,6 +111,7 @@ export const DetailsCommentTextarea = styled.textarea`
 
 export const DetailsCommentButton = styled.button`
   background: #B02D2A;
+  margin: 10px;
   color: #fff;
   font-size: 16px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
