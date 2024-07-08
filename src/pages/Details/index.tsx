@@ -6,11 +6,15 @@ import memorinnAPI from "../../services/memorinnAPI"
 import { useDetails } from "../../hooks/DetailsContext"
 import { useAuth } from "../../hooks/AuthContext"
 import { useNavigate } from "react-router-dom"
+import ListItem from "../../components/ListItem"
 
 interface Comment {
   text: string;
   bookId: string;
   id: string;
+  userOwner: {
+    userName: string;
+  }
   [key: string]: unknown;
 }
 
@@ -98,10 +102,12 @@ function Details () {
               Ainda não temos nenhum comentário sobre este livro
             </DetailsNoCommentsMessage> : 
             comments.map((comment: Comment) => (
-              <h1>{comment.text}</h1>
+              <ListItem key={comment.id} type="search">
+               <b>{comment.userOwner.userName}</b><br />
+                {comment.text}
+              </ListItem>
             ))
           }
-          
         </DetailsRightContainer>
       </DetailsBottomContainer>
     </DetailsContainer>
