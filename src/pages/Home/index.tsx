@@ -15,12 +15,6 @@ import { useDetails } from '../../hooks/DetailsContext'
 interface Result {
   title: string;
   author_name: string[];
-  [key: string]: unknown;
-}
-
-interface Ranked {
-  title: string;
-  author_name: string[];
   ratings_average: number;
   key?: string;
   [key: string]: unknown;
@@ -33,14 +27,14 @@ function Home () {
   const [searchResults, setSearchResults] = useState([])
   const [totalOfPages, setTotalOfPages] = useState(0)
   const [isSearchEnable, setIsSearchEnable] = useState(true)
-  const [rankedResults, setRankedResults] = useState<Ranked[]>([])
+  const [rankedResults, setRankedResults] = useState<Result[]>([])
   const { setBook } = useDetails()
   const navigate = useNavigate()
   
   async function sortedByRating() {
     try {
       const response = await bookAPI.get(`/search.json?subject=literature&sort=rating desc&page=1&limit=10`)
-      setRankedResults(response.data.docs.sort((a: Ranked, b: Ranked) => b.ratings_average - a.ratings_average))
+      setRankedResults(response.data.docs.sort((a: Result, b: Result) => b.ratings_average - a.ratings_average))
     } catch (error) {
       console.error('Error fetching books:', error);
     }
@@ -74,7 +68,7 @@ function Home () {
     setSearchPage(newPage)
   }
 
-  function navigateToDetails(book: Ranked) {
+  function navigateToDetails(book: Result) {
     setBook({
       title: book.title,
       author: book.author_name[0],
@@ -131,7 +125,7 @@ function Home () {
         {
           searchResults.map((result: Result) => (
             <Link to={`details/${result.title}/${result.author_name ? result.author_name[0] : 'desconhecido'}`}>
-              <ListItem type='search'>
+              <ListItem type='search' onClick={() => navigateToDetails(result)} >
                 <b>{result.title}</b> escrito por {result.author_name ? result.author_name[0] : 'desconhecido'}
               </ListItem>
             </Link> 
@@ -179,15 +173,11 @@ function Home () {
       
       {
         rankedResults.slice(3, 10).map((book) => (
-          <Link to={`details/${book.title}/${book.author_name ? book.author_name[0] : 'desconhecido'}`}>
-            <ListItem type='ranking'>
-              <b>{book.title} - {book.ratings_average.toFixed(2)}<StarRate /></b> escrito por {book.author_name}
-            </ListItem>
-          </Link>
-          
+          <ListItem type='ranking' onClick={() => navigateToDetails(book)} >
+            <b>{book.title} - {book.ratings_average.toFixed(2)}<StarRate /></b> escrito por {book.author_name}
+          </ListItem>          
         ))
-      }
-    
+      } 
       </HomeRightContainer>
       </HomeBottomContainer>
     </HomeContainer>
