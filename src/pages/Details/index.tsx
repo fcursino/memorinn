@@ -53,6 +53,10 @@ function Details () {
       text: comment,
       userOwner: user,
       bookId: book?.id
+    }, {
+      headers: {
+        authorization: user.token
+      }
     })
     console.log(response.data)
   }
