@@ -22,11 +22,11 @@ function Details () {
   const [summary, setSummary] = useState("")
   const [comment, setComment] = useState("")
   const [comments, setComments] = useState([])
-  const { book } = useDetails()
+  const { book, setBook } = useDetails()
   const { user } = useAuth()
   const navigate = useNavigate()
 
-  async function generateSummary() {
+  async function generateSummary(book: any) {
     const response = await geminiAPI.post(`v1beta/models/gemini-1.5-flash:generateContent`, {
       "generationConfig":{},
       "safetySettings":[],
@@ -61,15 +61,29 @@ function Details () {
     console.log(response.data)
   }
 
-  async function searchBookComments() {
+  async function searchBookComments(book: any) {
     const response = await memorinnAPI.post('/comments/book', {
       bookId: book?.id
     })
     setComments(response.data)
   }
+  function getBookFromLocalstorage() {
+    const currentBook = localStorage.getItem('currentBook')
+    if(!currentBook) {
+      navigate('/') 
+      return false
+    } 
+    setBook(JSON.parse(currentBook))
+    generateSummary(JSON.parse(currentBook))
+    searchBookComments(JSON.parse(currentBook))
+  }
   useEffect(() => {
-    generateSummary()
-    searchBookComments()
+    if(!book) {
+      getBookFromLocalstorage()
+    } else {
+      generateSummary(book)
+      searchBookComments(book)
+    }
   },[])
   return (
     <DetailsContainer>
