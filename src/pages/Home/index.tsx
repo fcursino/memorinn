@@ -74,6 +74,11 @@ function Home () {
       author: book.author_name[0],
       id: book.key || ''
     })
+    localStorage.setItem('currentBook', JSON.stringify({
+      title: book.title,
+      author: book.author_name[0],
+      id: book.key || ''
+    }))
     navigate(`/details/${book.title}/${book.author_name}`)
   }
 
