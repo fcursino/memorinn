@@ -29,6 +29,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null)
 
   const login = async (credentials: Credentials) => {
 
@@ -44,6 +45,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           userName: response.data.user.userName,
           token: response.data.token
         })
+        setToken(response.data.token)
         setToStorage(response.data)
         return true
       } else {

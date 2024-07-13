@@ -45,20 +45,19 @@ function Details () {
   }
 
   async function registerComment() {
-    if(!user) {
-      const currentUser = getFromStorage()
+    let currentUser = user
+    if(!currentUser) currentUser = getFromStorage()
       if(!currentUser) {
         navigate('/login')
         return false
       }
-    }
     const response = await memorinnAPI.post(`/comments`, {
       text: comment,
-      userOwner: user,
+      userOwner: currentUser,
       bookId: book?.id
     }, {
       headers: {
-        authorization: user?.token
+        authorization: currentUser?.token
       }
     })
     console.log(response.data)
