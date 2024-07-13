@@ -17,6 +17,8 @@ interface AuthContextType {
   user: User | null;
   login: (credentials: Credentials) => Promise<boolean>;
   logout: () => void;
+  getFromStorage: () => User | null;
+  setToStorage: (user: User) => void;
 }
 
 interface AuthProviderProps {
@@ -42,6 +44,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           userName: response.data.user.userName,
           token: response.data.token
         })
+        setToStorage(response.data)
         return true
       } else {
         return false
@@ -53,10 +56,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('user')
   };
 
+  const getFromStorage = () => {
+    const currentUser = localStorage.getItem('user')
+    if(currentUser) {
+      setUser(JSON.parse(currentUser))
+      return JSON.parse(currentUser)
+    }
+    return null
+  }
+
+  const setToStorage = (user: User) => {
+    localStorage.setItem('user', JSON.stringify(user))
+  }
+
   return (
-    <AuthContext.Provider  value={{ user, login, logout }}>
+    <AuthContext.Provider  value={{ user, login, logout, getFromStorage, setToStorage }}>
       {children}
     </AuthContext.Provider>
   );
