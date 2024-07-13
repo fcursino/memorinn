@@ -23,7 +23,7 @@ function Details () {
   const [comment, setComment] = useState("")
   const [comments, setComments] = useState([])
   const { book, setBook } = useDetails()
-  const { user } = useAuth()
+  const { user, getFromStorage } = useAuth()
   const navigate = useNavigate()
 
   async function generateSummary(book: any) {
@@ -46,8 +46,11 @@ function Details () {
 
   async function registerComment() {
     if(!user) {
-      navigate('/login')
-      return false
+      const currentUser = getFromStorage()
+      if(!currentUser) {
+        navigate('/login')
+        return false
+      }
     }
     const response = await memorinnAPI.post(`/comments`, {
       text: comment,
@@ -55,7 +58,7 @@ function Details () {
       bookId: book?.id
     }, {
       headers: {
-        authorization: user.token
+        authorization: user?.token
       }
     })
     console.log(response.data)
@@ -67,7 +70,7 @@ function Details () {
     })
     setComments(response.data)
   }
-  function getBookFromLocalstorage() {
+  function getFromLocalstorage() {
     const currentBook = localStorage.getItem('currentBook')
     if(!currentBook) {
       navigate('/') 
@@ -79,7 +82,7 @@ function Details () {
   }
   useEffect(() => {
     if(!book) {
-      getBookFromLocalstorage()
+      getFromLocalstorage()
     } else {
       generateSummary(book)
       searchBookComments(book)
