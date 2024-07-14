@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import memorinnAPI from '../services/memorinnAPI';
-
+import Cookies from 'js-cookie';
 interface User {
   name: string;
   email: string;
@@ -58,11 +58,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('user')
+    Cookies.remove('user')
   };
 
   const getFromStorage = () => {
-    const currentUser = localStorage.getItem('user')
+    const currentUser = Cookies.get('user')
     if(currentUser) {
       setUser(JSON.parse(currentUser))
       return JSON.parse(currentUser)
@@ -71,7 +71,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   const setToStorage = (user: User) => {
-    localStorage.setItem('user', JSON.stringify(user))
+    Cookies.set('user', JSON.stringify(user))
   }
 
   return (
