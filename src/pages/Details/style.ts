@@ -128,3 +128,25 @@ export const DetailsCommentButton = styled.button`
     cursor: default;
   }
 `
+
+export const DetailsCommentThread = styled.ul`
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  list-style-type: none;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+`
+
+export const DetailsThreadComment = styled.li`
+  background: transparent;
+  text-align: justify;
+`
+
+export const DetailsThreadTitle = styled.div`
+  color: #B02D2A;
+  width: 100%;
+  text-align: center;
+`
