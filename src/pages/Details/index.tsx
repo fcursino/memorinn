@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Logo from "../../components/Logo"
-import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentButton, DetailsCommentContainer, DetailsCommentTextarea, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer } from "./style"
+import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentButton, DetailsCommentContainer, DetailsCommentTextarea, DetailsCommentThread, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer, DetailsThreadComment, DetailsThreadTitle } from "./style"
 import geminiAPI from "../../services/geminiAPI"
 import memorinnAPI from "../../services/memorinnAPI"
 import { useDetails } from "../../hooks/DetailsContext"
@@ -121,12 +121,18 @@ function Details () {
             <DetailsNoCommentsMessage>
               Ainda não temos nenhum comentário sobre este livro
             </DetailsNoCommentsMessage> : 
-            comments.map((comment: Comment) => (
-              <ListItem key={comment.id} type="search">
-               <b>{comment.userOwner.userName}</b><br />
-                {comment.text}
-              </ListItem>
-            ))
+            <DetailsCommentThread>
+              <DetailsThreadTitle>
+                <h3>Comentários</h3>
+              </DetailsThreadTitle>
+              {comments.map((comment: Comment) => (
+              <DetailsThreadComment key={comment.id}>
+               <i>"{comment.text}"</i><b> - {comment.userOwner.userName}</b>
+               
+              </DetailsThreadComment>
+            ))}
+            </DetailsCommentThread>
+            
           }
         </DetailsRightContainer>
       </DetailsBottomContainer>
