@@ -53,7 +53,7 @@ function Details () {
         navigate('/login')
         return false
       }
-    const response = await memorinnAPI.post(`/comments`, {
+    await memorinnAPI.post(`/comments`, {
       text: comment,
       userOwner: currentUser,
       bookId: book?.id
@@ -62,7 +62,6 @@ function Details () {
         authorization: currentUser?.token
       }
     })
-    console.log(response.data)
     setRegisterCommentEnabled(true)
   }
 
