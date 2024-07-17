@@ -22,6 +22,7 @@ function Details () {
   const [summary, setSummary] = useState("")
   const [comment, setComment] = useState("")
   const [comments, setComments] = useState([])
+  const [registerCommentEnabled, setRegisterCommentEnabled] = useState(true)
   const { book, setBook } = useDetails()
   const { user, getFromStorage } = useAuth()
   const navigate = useNavigate()
@@ -45,6 +46,7 @@ function Details () {
   }
 
   async function registerComment() {
+    setRegisterCommentEnabled(false)
     let currentUser = user
     if(!currentUser) currentUser = getFromStorage()
       if(!currentUser) {
@@ -61,6 +63,7 @@ function Details () {
       }
     })
     console.log(response.data)
+    setRegisterCommentEnabled(true)
   }
 
   async function searchBookComments(book: any) {
@@ -112,7 +115,7 @@ function Details () {
               onChange={e => setComment(e.target.value)}
             />
           </DetailsCommentContainer>
-          <DetailsCommentButton onClick={registerComment}>
+          <DetailsCommentButton onClick={registerComment} disabled={!registerCommentEnabled}>
             Enviar comentário para análise
           </DetailsCommentButton>
         </DetailsLeftContainer>
