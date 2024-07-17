@@ -6,7 +6,6 @@ import memorinnAPI from "../../services/memorinnAPI"
 import { useDetails } from "../../hooks/DetailsContext"
 import { useAuth } from "../../hooks/AuthContext"
 import { useNavigate } from "react-router-dom"
-import ListItem from "../../components/ListItem"
 
 interface Comment {
   text: string;
@@ -22,7 +21,6 @@ function Details () {
   const [summary, setSummary] = useState("")
   const [comment, setComment] = useState("")
   const [comments, setComments] = useState([])
-  const [registerCommentEnabled, setRegisterCommentEnabled] = useState(true)
   const { book, setBook } = useDetails()
   const { user, getFromStorage } = useAuth()
   const navigate = useNavigate()
@@ -46,7 +44,6 @@ function Details () {
   }
 
   async function registerComment() {
-    setRegisterCommentEnabled(false)
     let currentUser = user
     if(!currentUser) currentUser = getFromStorage()
       if(!currentUser) {
@@ -62,7 +59,6 @@ function Details () {
         authorization: currentUser?.token
       }
     })
-    setRegisterCommentEnabled(true)
   }
 
   async function searchBookComments(book: any) {
@@ -114,7 +110,7 @@ function Details () {
               onChange={e => setComment(e.target.value)}
             />
           </DetailsCommentContainer>
-          <DetailsCommentButton onClick={registerComment} disabled={!registerCommentEnabled}>
+          <DetailsCommentButton onClick={registerComment} disabled={!comment.trim()}>
             Enviar comentário para análise
           </DetailsCommentButton>
         </DetailsLeftContainer>
