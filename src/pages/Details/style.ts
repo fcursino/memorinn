@@ -145,8 +145,10 @@ export const DetailsThreadComment = styled.li`
   text-align: justify;
 `
 
-export const DetailsThreadTitle = styled.div`
+export const DetailsTextContainer = styled.div`
   color: #B02D2A;
-  width: 100%;
-  text-align: center;
+  width: fit-content;
+  position: relative;
+  margin: 0 10px;
+  text-align: left;
 `

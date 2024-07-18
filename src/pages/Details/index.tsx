@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Logo from "../../components/Logo"
-import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentButton, DetailsCommentContainer, DetailsCommentTextarea, DetailsCommentThread, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer, DetailsThreadComment, DetailsThreadTitle } from "./style"
+import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentButton, DetailsCommentContainer, DetailsCommentTextarea, DetailsCommentThread, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer, DetailsThreadComment, DetailsTextContainer } from "./style"
 import geminiAPI from "../../services/geminiAPI"
 import memorinnAPI from "../../services/memorinnAPI"
 import { useDetails } from "../../hooks/DetailsContext"
@@ -21,6 +21,8 @@ function Details () {
   const [summary, setSummary] = useState("")
   const [comment, setComment] = useState("")
   const [comments, setComments] = useState([])
+  const [registerCommentEnabled, setRegisterCommentEnabled] = useState(true)
+  const [commentSent, setCommentSent] = useState(false)
   const { book, setBook } = useDetails()
   const { user, getFromStorage } = useAuth()
   const navigate = useNavigate()
@@ -44,6 +46,7 @@ function Details () {
   }
 
   async function registerComment() {
+    setRegisterCommentEnabled(false)
     let currentUser = user
     if(!currentUser) currentUser = getFromStorage()
       if(!currentUser) {
@@ -59,6 +62,11 @@ function Details () {
         authorization: currentUser?.token
       }
     })
+    setCommentSent(true)
+    setTimeout(() => {
+      setRegisterCommentEnabled(true)
+      setCommentSent(false)
+    }, 2000)
   }
 
   async function searchBookComments(book: any) {
@@ -110,9 +118,18 @@ function Details () {
               onChange={e => setComment(e.target.value)}
             />
           </DetailsCommentContainer>
-          <DetailsCommentButton onClick={registerComment} disabled={!comment.trim()}>
+          <DetailsCommentButton 
+            title="Digite algum comentário para e clique aqui para enviá-lo."
+            onClick={registerComment} 
+            disabled={!comment.trim() || !registerCommentEnabled}>
             Enviar comentário para análise
           </DetailsCommentButton>
+          {commentSent ?
+            <DetailsTextContainer>
+              <h5>Comentário enviado!</h5>
+            </DetailsTextContainer>
+          : null}
+          
         </DetailsLeftContainer>
         <DetailsRightContainer>
           {comments.length === 0 ?
@@ -120,9 +137,9 @@ function Details () {
               Ainda não temos nenhum comentário sobre este livro
             </DetailsNoCommentsMessage> : 
             <DetailsCommentThread>
-              <DetailsThreadTitle>
+              <DetailsTextContainer>
                 <h3>Comentários</h3>
-              </DetailsThreadTitle>
+              </DetailsTextContainer>
               {comments.map((comment: Comment) => (
               <DetailsThreadComment key={comment.id}>
                <i>"{comment.text}"</i><b> - {comment.userOwner.userName}</b>
