@@ -6,6 +6,7 @@ interface User {
   email: string;
   userName: string;
   token: string;
+  id: string;
 }
 
 interface Credentials {
@@ -40,6 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       })
       if(response.data) {
         setUser({
+          id: response.data.user.id,
           name: response.data.user.name,
           email: response.data.user.email,
           userName: response.data.user.userName,
@@ -72,6 +74,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const setToStorage = (data: any) => {
     Cookies.set('user', JSON.stringify({
+      id: data.user.id,
       name: data.user.name,
       email: data.user.email,
       userName: data.user.userName,
