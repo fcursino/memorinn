@@ -70,8 +70,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return null
   }
 
-  const setToStorage = (user: User) => {
-    Cookies.set('user', JSON.stringify(user))
+  const setToStorage = (data: any) => {
+    Cookies.set('user', JSON.stringify({
+      name: data.user.name,
+      email: data.user.email,
+      userName: data.user.userName,
+      token: data.token
+    }))
   }
 
   return (
