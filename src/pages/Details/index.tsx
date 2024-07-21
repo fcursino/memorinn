@@ -6,6 +6,7 @@ import memorinnAPI from "../../services/memorinnAPI"
 import { useDetails } from "../../hooks/DetailsContext"
 import { useAuth } from "../../hooks/AuthContext"
 import { useNavigate } from "react-router-dom"
+import { Edit } from "@material-ui/icons"
 
 interface Comment {
   text: string;
@@ -13,6 +14,7 @@ interface Comment {
   id: string;
   userOwner: {
     userName: string;
+    id: string;
   }
   [key: string]: unknown;
 }
@@ -73,6 +75,9 @@ function Details () {
     const response = await memorinnAPI.post('/comments/book', {
       bookId: book?.id
     })
+    // response.data.map((item: Comment) => {
+    //   console.log(item.userOwner.id, user?.id)
+    // })
     setComments(response.data)
   }
   function getFromLocalstorage() {
@@ -147,7 +152,6 @@ function Details () {
               </DetailsThreadComment>
             ))}
             </DetailsCommentThread>
-            
           }
         </DetailsRightContainer>
       </DetailsBottomContainer>

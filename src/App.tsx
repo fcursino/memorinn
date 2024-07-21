@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Details from './pages/Details'
 import Register from './pages/Register'
 import { DetailsProvider } from './hooks/DetailsContext'
+import Account from './components/Account'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
     <>
       <Background />
       <Navbar/>
+      <Account />
       <Router>
         <Routes>
           <Route path='/' element={<DetailsProvider><Home /></DetailsProvider>} />
