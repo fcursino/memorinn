@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import Logo from "../../components/Logo"
-import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentButton, DetailsCommentContainer, DetailsCommentTextarea, DetailsCommentThread, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer, DetailsThreadComment, DetailsTextContainer } from "./style"
+import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentButton, DetailsCommentContainer, DetailsCommentTextarea, DetailsCommentThread, DetailsContainer, DetailsContentContainer, DetailsLeftContainer, DetailsLogoTitle, DetailsNoCommentsMessage, DetailsRightContainer, DetailsThreadComment, DetailsTextContainer, DetailsCommentEditButton } from "./style"
 import geminiAPI from "../../services/geminiAPI"
 import memorinnAPI from "../../services/memorinnAPI"
 import { useDetails } from "../../hooks/DetailsContext"
 import { useAuth } from "../../hooks/AuthContext"
 import { useNavigate } from "react-router-dom"
-import { Edit } from "@material-ui/icons"
+import { Check, Close, Edit } from "@material-ui/icons"
 
 interface Comment {
   text: string;
@@ -24,6 +24,8 @@ function Details () {
   const [comment, setComment] = useState("")
   const [comments, setComments] = useState([])
   const [registerCommentEnabled, setRegisterCommentEnabled] = useState(true)
+  const [commentEdited, setCommentEdited] = useState("")
+  const [isEditing, setIsEditing] = useState(false)
   const [commentSent, setCommentSent] = useState(false)
   const { book, setBook } = useDetails()
   const { user, getFromStorage } = useAuth()
@@ -75,9 +77,9 @@ function Details () {
     const response = await memorinnAPI.post('/comments/book', {
       bookId: book?.id
     })
-    // response.data.map((item: Comment) => {
-    //   console.log(item.userOwner.id, user?.id)
-    // })
+    response.data.map((item: Comment) => {
+      console.log(item.userOwner.id, user?.id)
+    })
     setComments(response.data)
   }
   function getFromLocalstorage() {
@@ -157,10 +159,28 @@ function Details () {
               <DetailsTextContainer>
                 <h3>Comentários</h3>
               </DetailsTextContainer>
-              {comments.map((comment: Comment) => (
-              <DetailsThreadComment key={comment.id}>
-               <i>"{comment.text}"</i><b> - {comment.userOwner.userName}</b>
-               
+              {comments.map((cmt: Comment) => (
+              <DetailsThreadComment key={cmt.id}>
+                {cmt.userOwner.id && user && cmt.userOwner.id === user?.id ? isEditing?
+                  <>
+                  <DetailsCommentContainer>
+                    <DetailsCommentTextarea
+                      value={comment} 
+                      onChange={e => setComment(e.target.value)} 
+                    />
+                  </DetailsCommentContainer>
+                    <DetailsCommentEditButton onClick={() => cancelEditing()}>
+                      <Close fontSize="small"/>
+                    </DetailsCommentEditButton>
+                    <DetailsCommentEditButton onClick={() => saveEditing()}>
+                      <Check fontSize="small"/>
+                    </DetailsCommentEditButton>
+                  </> :
+                  <DetailsCommentEditButton onClick={() => editComment(cmt.text)}>
+                    <Edit fontSize="small"/>
+                  </DetailsCommentEditButton>
+                  : <><i>"{cmt.text}"</i><b> - {cmt.userOwner.userName}</b></>
+                }
               </DetailsThreadComment>
             ))}
             </DetailsCommentThread>

@@ -143,6 +143,7 @@ export const DetailsCommentThread = styled.ul`
 export const DetailsThreadComment = styled.li`
   background: transparent;
   text-align: justify;
+  display: flex;
 `
 
 export const DetailsTextContainer = styled.div`
@@ -151,4 +152,14 @@ export const DetailsTextContainer = styled.div`
   position: relative;
   margin: 0 10px;
   text-align: left;
+`
+
+export const DetailsCommentEditButton = styled.div`
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  width: fit-content;
+  height: fit-content;
+  margin-left: 5px;
+  padding: 5px;
+  cursor: pointer;
 `
