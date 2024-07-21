@@ -90,6 +90,18 @@ function Details () {
     generateSummary(JSON.parse(currentBook))
     searchBookComments(JSON.parse(currentBook))
   }
+  function editComment (comment: string) {
+    setIsEditing(true)
+    setCommentEdited(comment)
+  }
+  function cancelEditing () {
+    setIsEditing(false)
+    setCommentEdited("")
+  }
+  function saveEditing () {
+    setIsEditing(false)
+    setCommentEdited("")
+  }
   useEffect(() => {
     if(!book) {
       getFromLocalstorage()
