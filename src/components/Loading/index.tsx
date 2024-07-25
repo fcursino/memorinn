@@ -1,4 +1,5 @@
-import { HourglassEmpty } from "@material-ui/icons"
+// import { HourglassEmpty } from "@material-ui/icons"
+import { TbHourglassEmpty } from "react-icons/tb"
 import { LoadingContainer, LoadingIcon, LoadingMessage } from "./styles"
 
 interface LoadingProps {
@@ -9,7 +10,7 @@ const Loading: React.FC<LoadingProps> = ({message}) => {
   return (
     <LoadingContainer>
       <LoadingIcon>
-        <HourglassEmpty fontSize="large" htmlColor="#151313" />
+        <TbHourglassEmpty fontSize="large" color="#151313" />
       </LoadingIcon>
       <LoadingMessage>
         {message}

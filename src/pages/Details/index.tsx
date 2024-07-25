@@ -6,7 +6,9 @@ import memorinnAPI from "../../services/memorinnAPI"
 import { useDetails } from "../../hooks/DetailsContext"
 import { useAuth } from "../../hooks/AuthContext"
 import { useNavigate } from "react-router-dom"
-import { Check, Close, Edit } from "@material-ui/icons"
+// import { Check, Close, Edit } from "@material-ui/icons"
+import { FaCheck, FaEdit } from "react-icons/fa"
+import { MdClear } from "react-icons/md"
 
 interface Comment {
   text: string;
@@ -170,14 +172,14 @@ function Details () {
                     />
                   </DetailsCommentContainer>
                     <DetailsCommentEditButton onClick={() => cancelEditing()}>
-                      <Close fontSize="small"/>
+                      <MdClear fontSize="small"/>
                     </DetailsCommentEditButton>
                     <DetailsCommentEditButton onClick={() => saveEditing()}>
-                      <Check fontSize="small"/>
+                      <FaCheck fontSize="small"/>
                     </DetailsCommentEditButton>
                   </> :
                   <DetailsCommentEditButton onClick={() => editComment(cmt.text)}>
-                    <Edit fontSize="small"/>
+                    <FaEdit fontSize="small"/>
                   </DetailsCommentEditButton>
                   : <><i>"{cmt.text}"</i><b> - {cmt.userOwner.userName}</b></>
                 }

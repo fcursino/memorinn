@@ -1,4 +1,5 @@
-import { Search, Clear, StarRate, Stars, SentimentVeryDissatisfied } from '@material-ui/icons'
+// import { Search, Clear, StarRate, Stars, SentimentVeryDissatisfied } from '@material-ui/icons'
+import { MdSearch, MdClear, MdStarRate, MdStars, MdSentimentVeryDissatisfied } from 'react-icons/md'
 import Card from '../../components/Card'
 import Input from '../../components/Input'
 import ListItem from '../../components/ListItem'
@@ -110,16 +111,18 @@ function Home () {
         </HomeSearchTitle>
         <Input changeSearch={setSearch} value={search}>
             <Icon onClick={searchPreparation}>
-              <Search 
-                titleAccess='buscar' 
+              <MdSearch 
+                size={25}
+                title='buscar' 
                 color="inherit" 
               />
             </Icon>   
             {
               search ?
               <Icon onClick={clearSearch} >
-                <Clear 
-                  titleAccess='limpar' 
+                <MdClear 
+                  size={25}
+                  title='limpar' 
                   color="inherit" 
                 />
               </Icon> : null
@@ -152,7 +155,7 @@ function Home () {
           noResults ?
           <HomeNoResultsMessage>
             Não encontramos nenhum resultado para sua pesquisa <br /> 
-            <SentimentVeryDissatisfied fontSize='large' />
+            <MdSentimentVeryDissatisfied size={25} fontSize='large' />
           </HomeNoResultsMessage> : null
         }
       </HomeLeftContainer>
@@ -164,13 +167,13 @@ function Home () {
           {rankedResults.length ?
           <>
           <Card onClick={() => navigateToDetails(rankedResults[1])} title={rankedResults[1].title} marginTop={30}>
-             <p><Stars htmlColor='#C0C0C0' fontSize='large'/>{rankedResults[1].ratings_average.toFixed(2)}</p>
+             <p><MdStars size={40} color='#C0C0C0' fontSize='large'/>{rankedResults[1].ratings_average.toFixed(2)}</p>
            </Card>
            <Card onClick={() => navigateToDetails(rankedResults[0])} title={rankedResults[0].title}>
-             <p><Stars htmlColor='#FFD700' fontSize='large'/>{rankedResults[0].ratings_average.toFixed(2)}</p>
+             <p><MdStars size={40} color='#FFD700' fontSize='large'/>{rankedResults[0].ratings_average.toFixed(2)}</p>
            </Card>
            <Card onClick={() => navigateToDetails(rankedResults[2])} title={rankedResults[2].title} marginTop={30}>
-             <p><Stars htmlColor='#CD7F32' fontSize='large'/>{rankedResults[2].ratings_average.toFixed(2)}</p>
+             <p><MdStars size={40} color='#CD7F32' fontSize='large'/>{rankedResults[2].ratings_average.toFixed(2)}</p>
            </Card>
           </> : null 
           }
@@ -179,7 +182,7 @@ function Home () {
       {
         rankedResults.slice(3, 10).map((book) => (
           <ListItem type='ranking' onClick={() => navigateToDetails(book)} >
-            <b>{book.title} - {book.ratings_average.toFixed(2)}<StarRate /></b> escrito por {book.author_name}
+            <b>{book.title} - {book.ratings_average.toFixed(2)}<MdStarRate /></b> escrito por {book.author_name}
           </ListItem>          
         ))
       } 
