@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../hooks/AuthContext";
 import { AccountContainer, AccountLoginButton } from "./style";
+import { store } from "../../state/store";
 
 interface AccountProps {}
 
 const Account: React.FC<AccountProps> = () => {
-  const { user } = useAuth()
   const [isLoginPage, setIsLoginPage] = useState(true)
+  const { auth } = store.getState()
+  const user = auth.value
   useEffect(() => {
     if(!window.location.pathname.includes('login')) setIsLoginPage(false)
   }, [])

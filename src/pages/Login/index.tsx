@@ -3,8 +3,7 @@ import Input from "../../components/Input"
 import Logo from "../../components/Logo"
 import { LoginButton, LoginContainer, LoginLogoTitle, LoginWarning } from "./style"
 import { Link, useNavigate } from "react-router-dom"
-import memorinnAPI from "../../services/memorinnAPI"
-import { login, saveUser } from "../../state/auth/authSlice"
+import { login } from "../../state/auth/authSlice"
 
 function Login () {
   const [email, setEmail] = useState("")
@@ -19,12 +18,8 @@ function Login () {
     setLoginEnabled(false)
     try {
       setValidated(false)
-      await login({email, password})
-      if(response) {
-        saveUser(response.data)
-        navigate('/')
-      } 
-      setLoggedIn(!response)
+      login({email, password})
+      navigate('/')
       setValidated(true)
       setLoginEnabled(true)
     } catch (error) {

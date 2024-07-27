@@ -4,11 +4,11 @@ import { DetailsBookTitle, DetailsBottomContainer, DetailsCommentButton, Details
 import geminiAPI from "../../services/geminiAPI"
 import memorinnAPI from "../../services/memorinnAPI"
 import { useDetails } from "../../hooks/DetailsContext"
-import { useAuth } from "../../hooks/AuthContext"
 import { useNavigate } from "react-router-dom"
 // import { Check, Close, Edit } from "@material-ui/icons"
 import { FaCheck, FaEdit } from "react-icons/fa"
 import { MdClear } from "react-icons/md"
+import { store } from "../../state/store"
 
 interface Comment {
   text: string;
@@ -30,8 +30,9 @@ function Details () {
   const [isEditing, setIsEditing] = useState(false)
   const [commentSent, setCommentSent] = useState(false)
   const { book, setBook } = useDetails()
-  const { user } = useAuth()
   const navigate = useNavigate()
+  const { auth } = store.getState()
+  const user = auth.value
 
   async function generateSummary(book: any) {
     const response = await geminiAPI.post(`v1beta/models/gemini-1.5-flash:generateContent`, {
