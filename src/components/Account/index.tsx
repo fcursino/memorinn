@@ -16,7 +16,7 @@ const Account: React.FC<AccountProps> = () => {
   }
     return (
       <>
-        {!isLoginPage ? user ?
+        {!isLoginPage ? user.token ?
         <AccountContainer>
            {user.userName}<br/>Nome: {user.name}
         </AccountContainer> : 

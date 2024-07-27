@@ -30,7 +30,7 @@ function Details () {
   const [isEditing, setIsEditing] = useState(false)
   const [commentSent, setCommentSent] = useState(false)
   const { book, setBook } = useDetails()
-  const { user, getFromStorage } = useAuth()
+  const { user } = useAuth()
   const navigate = useNavigate()
 
   async function generateSummary(book: any) {
@@ -53,19 +53,17 @@ function Details () {
 
   async function registerComment() {
     setRegisterCommentEnabled(false)
-    let currentUser = user
-    if(!currentUser) currentUser = getFromStorage()
-      if(!currentUser) {
+      if(!user.token) {
         navigate('/login')
         return false
       }
     await memorinnAPI.post(`/comments`, {
       text: comment,
-      userOwner: currentUser,
+      userOwner: user,
       bookId: book?.id
     }, {
       headers: {
-        authorization: currentUser?.token
+        authorization: user.token
       }
     })
     setCommentSent(true)

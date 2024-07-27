@@ -2,8 +2,9 @@ import { useState } from "react"
 import Input from "../../components/Input"
 import Logo from "../../components/Logo"
 import { LoginButton, LoginContainer, LoginLogoTitle, LoginWarning } from "./style"
-import { useAuth } from '../../hooks/AuthContext'
 import { Link, useNavigate } from "react-router-dom"
+import memorinnAPI from "../../services/memorinnAPI"
+import { login, saveUser } from "../../state/auth/authSlice"
 
 function Login () {
   const [email, setEmail] = useState("")
@@ -11,7 +12,6 @@ function Login () {
   const [loginEnabled, setLoginEnabled] = useState(true)
   const [validated, setValidated] = useState(false)
   const [loggedIn, setLoggedIn] = useState(false)
-  const { login } = useAuth()
   const navigate = useNavigate()
 
   async function handleLogin () {
@@ -19,8 +19,11 @@ function Login () {
     setLoginEnabled(false)
     try {
       setValidated(false)
-      const response = await login({email, password})
-      if(response) navigate('/')
+      await login({email, password})
+      if(response) {
+        saveUser(response.data)
+        navigate('/')
+      } 
       setLoggedIn(!response)
       setValidated(true)
       setLoginEnabled(true)
