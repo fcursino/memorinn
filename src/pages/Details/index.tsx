@@ -54,6 +54,7 @@ function Details () {
 
   async function registerComment() {
     setRegisterCommentEnabled(false)
+      console.log(user)
       if(!user.token) {
         navigate('/login')
         return false
@@ -106,6 +107,7 @@ function Details () {
     setCommentEdited("")
   }
   useEffect(() => {
+    console.log(user)
     if(!book) {
       getFromLocalstorage()
     } else {
