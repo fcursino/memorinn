@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import memorinnAPI from "../../services/memorinnAPI";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie"
 
 type User = {
   name: string | null;
@@ -7,11 +7,6 @@ type User = {
   token: string | null;
   id: string | null;
   email: string | null;
-}
-
-type Credentials = {
-  email: string;
-  password: string;
 }
 
 interface AuthState {
@@ -32,28 +27,18 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    login: (state, action: PayloadAction<User>) => {
+      alert(action.payload)
+      console.log(action.payload)
+      state.value = action.payload
+      Cookies.set("token", action.payload.token || "")
+    },
     logout: (state) => {
       state.value = initialState.value
+      Cookies.remove("token")
     }
-  },
-  extraReducers: (builder) => {
-    builder.addCase(
-      login.fulfilled,
-      (state, action: PayloadAction<User>) => {
-        state.value = action.payload
-      }
-    )
   }
 })
 
-export const login = createAsyncThunk(
-  "auth/login",
-  async (credentials: Credentials) => {
-    const response = await memorinnAPI.post(`/users/login`, {...credentials})
-    if(!response.data) return initialState
-    return response.data
-  }
-)
-
-export const { logout } = authSlice.actions
+export const { login, logout } = authSlice.actions
 export default authSlice.reducer
