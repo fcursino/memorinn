@@ -159,7 +159,7 @@ function Details () {
               </DetailsTextContainer>
               {comments.map((cmt: Comment) => (
               <DetailsThreadComment key={cmt.id}>
-                {cmt.userOwner.id && user && cmt.userOwner.id === user?.id ? isEditing?
+                {cmt.userOwner.id && user.token && cmt.userOwner.id === user?.id ? isEditing?
                   <>
                   <DetailsCommentContainer>
                     <DetailsCommentTextarea
