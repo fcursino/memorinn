@@ -54,7 +54,6 @@ function Details () {
 
   async function registerComment() {
     setRegisterCommentEnabled(false)
-      console.log(user)
       if(!user.token) {
         navigate('/login')
         return false
@@ -78,9 +77,6 @@ function Details () {
   async function searchBookComments(book: any) {
     const response = await memorinnAPI.post('/comments/book', {
       bookId: book?.id
-    })
-    response.data.map((item: Comment) => {
-      console.log(item.userOwner.id, user?.id)
     })
     setComments(response.data)
   }
@@ -107,7 +103,6 @@ function Details () {
     setCommentEdited("")
   }
   useEffect(() => {
-    console.log(user)
     if(!book) {
       getFromLocalstorage()
     } else {

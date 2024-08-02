@@ -14,7 +14,6 @@ const Navbar = () => {
         const checkAndLogin = async () => {
             if (!user.token) {
                 const token = Cookies.get("token");
-                console.log(token)
                 if (token) {
                     try {
                         const response = await memorinnAPI.post(`/users/login/${token}`);
