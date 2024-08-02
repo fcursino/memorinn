@@ -109,7 +109,7 @@ function Details () {
       generateSummary(book)
       searchBookComments(book)
     }
-  },[])
+  },[user])
   return (
     <DetailsContainer>
       <Logo>

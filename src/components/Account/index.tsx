@@ -10,7 +10,7 @@ const Account: React.FC<AccountProps> = () => {
   const user = auth.value
   useEffect(() => {
     if(!window.location.pathname.includes('login')) setIsLoginPage(false)
-  }, [])
+  }, [user])
 
   function redirectToLogin () {
     window.location.pathname = '/login'
