@@ -28,8 +28,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<User>) => {
-      alert(action.payload)
-      console.log(action.payload)
       state.value = action.payload
       Cookies.set("token", action.payload.token || "")
     },
